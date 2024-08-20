@@ -20,25 +20,28 @@ Este script realiza los siguientes pasos:
 ##Estructura del Proyecto
 
 coder61890/
-├── config/
-│   └── config.ini
-├── scripts/
-│   ├── script.py
-└── README.md
 
-##Instrucciones de Uso
+  -- config/
+  
+    └── config.ini
+  -- scripts/
+  
+    ├── script.py
+  
+  -- README.md
+
+## Instrucciones de Uso
+
 
 1.Configura el Archivo de Configuración:
-Edita config/config.ini con las credenciales de tu base de datos Redshift.
+  Edita config/config.ini con las credenciales de tu base de datos Redshift.
 
 2.Ejecuta el Script:
+  Asegúrate de tener las dependencias instaladas (requests, psycopg2, pandas).
+  Ejecuta el script con el siguiente comando:
+        python scripts/script.py
 
-Asegúrate de tener las dependencias instaladas (requests, psycopg2, pandas).
-Ejecuta el script con el siguiente comando:
-
-python scripts/script.py
-
-##Verifica los Datos:
+## Verifica los Datos:
 
 Accede a tu base de datos Redshift y revisa la tabla tasa_divisas para confirmar que los datos se han cargado y actualizado correctamente.
 
