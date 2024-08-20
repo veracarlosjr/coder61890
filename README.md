@@ -1,5 +1,3 @@
-
-
 # coder61890
 Proyecto del curso Data Engineering
 
@@ -47,4 +45,3 @@ Accede a tu base de datos Redshift y revisa la tabla tasa_divisas para confirmar
 
 select *
 from veraramirez12_coderhouse.tasa_divisas td 
-
