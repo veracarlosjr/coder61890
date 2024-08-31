@@ -1,4 +1,22 @@
-apache-airflow==2.5.0
+# Versión específica de Airflow (ya que se instala en el Dockerfile)
+apache-airflow==2.7.2
+
+# Conector para PostgreSQL
 psycopg2-binary
+
+# Manipulación de datos
 pandas
+
+# Dependencias para consumir APIs o realizar requests HTTP
+requests
+
+# Otras bibliotecas necesarias para tu proyecto
+numpy
+sqlalchemy
+python-dotenv
+
+# Dependencias opcionales que podrías necesitar para ejecutar tareas específicas en Airflow
+apache-airflow-providers-postgres
+apache-airflow-providers-http
+
 
