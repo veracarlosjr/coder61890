@@ -10,7 +10,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the DAGs directory and scripts
 COPY dags/ $AIRFLOW_HOME/dags/
-COPY scripts/ /app/scripts/
 
 # Set the working directory
 WORKDIR $AIRFLOW_HOME
