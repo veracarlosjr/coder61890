@@ -12,7 +12,7 @@ default_args = {
 }
 
 def run_etl():
-    subprocess.run(["python", "/app/scripts/main.py"])
+    subprocess.run(["python", "/app/dags/main.py"])
 
 dag = DAG(
     'daily_etl_dag',
