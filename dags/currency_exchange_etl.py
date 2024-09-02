@@ -1,7 +1,11 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime, timedelta
-import subprocess
+
+# Importa las funciones de tus módulos ETL
+from etl_modulos.extract import extract_data
+from etl_modulos.transform import transform_data
+from etl_modulos.load import load_data
 
 default_args = {
     'owner': 'airflow',
@@ -11,9 +15,6 @@ default_args = {
     'retry_delay': timedelta(minutes=5),
 }
 
-def run_etl():
-    subprocess.run(["python", "/app/dags/main.py"])
-
 dag = DAG(
     'daily_etl_dag',
     default_args=default_args,
@@ -21,11 +22,24 @@ dag = DAG(
     schedule_interval=timedelta(days=1),
 )
 
-run_etl_task = PythonOperator(
-    task_id='run_etl',
-    python_callable=run_etl,
+# Define las tareas del DAG
+extract_task = PythonOperator(
+    task_id='extract_task',
+    python_callable=extract_data,
     dag=dag,
 )
 
+transform_task = PythonOperator(
+    task_id='transform_task',
+    python_callable=transform_data,
+    dag=dag,
+)
 
+load_task = PythonOperator(
+    task_id='load_task',
+    python_callable=load_data,
+    dag=dag,
+)
 
+# Define el flujo de tareas
+extract_task >> transform_task >> load_task
