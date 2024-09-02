@@ -74,6 +74,7 @@ x-airflow-common:
     # AIRFLOW_CONFIG: '/opt/airflow/config/airflow.cfg'
   volumes:
     - ${AIRFLOW_PROJ_DIR:-.}/dags:/opt/airflow/dags
+    - ${AIRFLOW_PROJ_DIR:-.}/etl_modulos:/opt/airflow/etl_modulos
     - ${AIRFLOW_PROJ_DIR:-.}/logs:/opt/airflow/logs
     - ${AIRFLOW_PROJ_DIR:-.}/config:/opt/airflow/config
     - ${AIRFLOW_PROJ_DIR:-.}/plugins:/opt/airflow/plugins
@@ -242,8 +243,8 @@ services:
           echo "   https://airflow.apache.org/docs/apache-airflow/stable/howto/docker-compose/index.html#before-you-begin"
           echo
         fi
-        mkdir -p /sources/logs /sources/dags /sources/plugins
-        chown -R "${AIRFLOW_UID}:0" /sources/{logs,dags,plugins}
+        mkdir -p /sources/logs /sources/dags /sources/plugins /sources/etl_modulos
+        chown -R "${AIRFLOW_UID}:0" /sources/{logs,dags,plugins,etl_modulos}
         exec /entrypoint airflow version
     # yamllint enable rule:line-length
     environment:
@@ -297,7 +298,7 @@ services:
         condition: service_completed_successfully
     env_file:
       - .env
-    
+
   python-service:
     container_name: python-service
     build: .

@@ -1,22 +1,21 @@
-# Use an official Python runtime as a parent image
+# Usa una imagen oficial de Python como base
 FROM python:3.9-slim
 
-# Set environment variables
+# Establece variables de entorno
 ENV AIRFLOW_HOME=/opt/airflow
+ENV PYTHONPATH="${PYTHONPATH}:/opt/airflow/dags:/opt/airflow/etl_modulos"
 
-# Install dependencies from requirements.txt
+# Instala dependencias desde requirements.txt
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the DAGs directory and scripts
+# Copia el directorio de DAGs, scripts y módulos ETL
 COPY dags/ $AIRFLOW_HOME/dags/
+COPY etl_modulos/ $AIRFLOW_HOME/etl_modulos/
+COPY config/ $AIRFLOW_HOME/config/
 
-# Set the working directory
+# Establece el directorio de trabajo
 WORKDIR $AIRFLOW_HOME
 
-# Set the default command to run Airflow
+# Establece el comando predeterminado para ejecutar Airflow
 CMD ["airflow", "standalone"]
-
-
-
-
