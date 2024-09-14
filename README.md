@@ -32,7 +32,6 @@ coder61890/
        ├── load_csv_rawdata.py
        └── raw_data.py
     ├── main.py
-    ├── Dockerfile
     ├── .gitignore
     ├── docker-compose.yml
     ├── README.md
@@ -59,8 +58,6 @@ coder61890/
    **load_csv_rawdata.py:** Script para cargar de manera manual datos desde un archivo csv
 
    **raw_data.py:** script para lectura de csv
-
-**Dockerfile:** Archivo para construir la imagen Docker para el proyecto.
 
 **.gitignore:** Archivos y carpetas que Git debe ignorar.
 
