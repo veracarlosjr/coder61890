@@ -18,7 +18,9 @@ Este script realiza los siguientes pasos:
 ##Estructura del Proyecto
 
 coder61890/
- 
+
+    ├── config/
+       └── config.ini
     ├── dags/
        ├── currency_exchange_etl.py
        ├── main.py
@@ -26,7 +28,8 @@ coder61890/
           ├── __init__.py
           ├── extract.py
           ├── transform.py
-          └── load.py
+          ├── load.py
+          └── mail_send.py
     ├── raw_data/
        ├── data.csv
        ├── load_csv_rawdata.py
@@ -34,9 +37,18 @@ coder61890/
     ├── main.py
     ├── .gitignore
     ├── docker-compose.yml
+    ├── dockerfile
     ├── README.md
     └── requirements.txt
 
+**confing.ini:** Contiene el código para ingresar el usuario de Redshift.
+
+    [redshift]
+    dbname=data-engineer-database
+    user=
+    password=
+    host=data-engineer-cluster.cyhh5bfevlmn.us-east-1.redshift.amazonaws.com
+    port=5439
 
 **dags/:** Contiene los archivos de definición del DAG para Apache Airflow.
 
@@ -50,6 +62,26 @@ coder61890/
      **extract.py:** Código para la extracción de datos.
      **transform.py:** Código para la transformación de datos.
      **load.py:** Código para la carga de datos en Redshift.
+     **mail_send"" Código para envíar las alertas al correo electrónico
+
+   **Para envíar las alertas se tiene que crear un archivo .env*
+                              
+      touch .env
+
+   **Ingresar el siguiente código**
+   sustituir el correo y la contraseña
+   
+     EMAIL=tu_email@gmail.com
+     EMAIL_PASSWORD=tu_contraseña_o_app_password
+     SMTP_HOST=smtp.gmail.com
+     SMTP_PORT=587
+     SMTP_USER=tu_email@gmail.com
+     SMTP_PASSWORD=tu_contraseña_o_app_password
+     SMTP_MAIL_FROM=tu_email@gmail.com
+     SMTP_STARTTLS=True
+     SMTP_SSL=False
+ 
+ 
 
 **raw_data/:** Contiene datos cargados de manera manual.
 
@@ -62,6 +94,8 @@ coder61890/
 **.gitignore:** Archivos y carpetas que Git debe ignorar.
 
 **docker-compose.yml:** Configuración para desplegar el entorno de Airflow y otras dependencias.
+
+**dockerfile:** Archivo para construir la imagen del proyecto.
 
 **README.md:** Este archivo, con detalles del proyecto y uso.
 
@@ -79,7 +113,7 @@ coder61890/
    
     Construye la imagen Docker y levanta los contenedores con:
    
-        docker-compose up --build
+        docker-compose up 
 
     Accede a la interfaz web de Airflow para ejecutar el DAG daily_etl_dag.
 
@@ -88,6 +122,8 @@ coder61890/
        python raw_data/load_csv_rawdata.py
 
 ## Verifica los Datos:
+
+Revisa el correo electrónico para asegurar la carga exitosa de datos.
 
 Accede a tu base de datos Redshift y revisa la tabla tasa_divisas para confirmar que los datos se han cargado y actualizado correctamente.
 
