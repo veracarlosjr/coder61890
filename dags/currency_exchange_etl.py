@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from etl_modulos.extract import extract_data
 from etl_modulos.transform import transform_data
 from etl_modulos.load import load_data
+from etl_modulos.mail_send import send_email  
 import configparser
 import requests
 
@@ -18,7 +19,6 @@ def get_api_url():
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
-    'start_date': datetime(2024, 1, 1),
     'retries': 1,
     'retry_delay': timedelta(minutes=5),
 }
@@ -28,6 +28,7 @@ dag = DAG(
     default_args=default_args,
     description='A simple daily ETL DAG',
     schedule_interval=timedelta(days=1),
+    start_date=datetime.now() - timedelta(days=1),  
 )
 
 def extract_and_return(**kwargs):
@@ -76,5 +77,13 @@ load_task = PythonOperator(
     dag=dag,
 )
 
-# Definir el flujo de tareas
-extract_task >> transform_task >> load_task
+email_alert_task = PythonOperator(
+    task_id='email_alert_task',
+    python_callable=send_email,
+    provide_context=True,
+    dag=dag,
+)
+
+# flujo de tareas
+extract_task >> transform_task >> load_task >> email_alert_task
+
