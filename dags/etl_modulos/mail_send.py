@@ -54,7 +54,7 @@ def send_email(**context):
         <body>
             <p>Hola,</p>
             <p>El proceso de extracción y carga a Redshift ha sido realizado con éxito.</p>
-            <p>Valor actual: {actual_value}</p>
+            <p>El valor actual del USD/EUR= {actual_value}</p>
         </body>
         </html>
         """
